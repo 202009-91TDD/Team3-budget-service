@@ -26,15 +26,14 @@ class BudgetService(object):
             if is_start_budget and is_end_budget:
                 return round(daily_amount * (end - start).days + 1, 2)
 
-            if is_start_budget:
+            elif is_start_budget:
                 amount += round(daily_amount * ((budget_last_day - start).days + 1), 2)
 
-            if begin_month < budget.yearMonth < end_month:
+            elif begin_month < budget.yearMonth < end_month:
                 amount += round(daily_amount * ((budget_last_day - budget_first_day).days + 1), 2)
 
-            if is_end_budget:
+            elif is_end_budget:
                 amount += round(daily_amount * ((end - budget_first_day).days + 1), 2)
-                # amount += round(daily_amount * end.day, 2)
 
         return amount
 
