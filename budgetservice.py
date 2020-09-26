@@ -1,3 +1,9 @@
+class Period(object):
+    def __init__(self, start, end) -> None:
+        self.start = start
+        self.end = end
+
+
 class BudgetService(object):
     def query(self, start, end):
         if start > end:
@@ -13,7 +19,9 @@ class BudgetService(object):
 
         return total_amount
 
-    def overlapping_days(self, budget, end, start):
+    @staticmethod
+    def overlapping_days(budget, end, start):
+        period = Period(start, end)
         overlapping_end = end if end < budget.last_day() else budget.last_day()
         overlapping_start = start if start > budget.first_day() else budget.first_day()
         overlapping_days = ((overlapping_end - overlapping_start).days + 1)
