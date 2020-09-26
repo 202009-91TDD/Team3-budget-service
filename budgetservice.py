@@ -34,11 +34,11 @@ class BudgetService(object):
 
             elif begin_month < budget.yearMonth < end_month:
                 overlapping_end = budget_last_day
-                overlapping_start = budget_first_day
+                overlapping_start = start if start > budget_first_day else budget_first_day
 
             elif is_end_budget:
                 overlapping_end = end
-                overlapping_start = budget_first_day
+                overlapping_start = start if start > budget_first_day else budget_first_day
 
             else:
                 break
