@@ -22,18 +22,19 @@ class BudgetService(object):
             is_start_budget = budget.yearMonth == start.strftime("%Y%m")
             is_end_budget = budget.yearMonth == end.strftime("%Y%m")
 
+            daily_amount = budget.amount / days_of_budget
             if is_start_budget and is_end_budget:
-                return round(budget.amount / days_of_budget * (end.day - start.day + 1), 2)
+                return round(daily_amount * (end.day - start.day + 1), 2)
 
             if is_start_budget:
-                amount += round(budget.amount / days_of_budget * (days_of_budget - start.day + 1), 2)
+                amount += round(daily_amount * (days_of_budget - start.day + 1), 2)
 
             if begin_month < budget.yearMonth < end_month:
-                amount += round(budget.amount / days_of_budget * ((budget_last_day - budget_first_day).days + 1), 2)
+                amount += round(daily_amount * ((budget_last_day - budget_first_day).days + 1), 2)
                 # amount += budget.amount
 
             if is_end_budget:
-                amount += round(budget.amount / days_of_budget * end.day, 2)
+                amount += round(daily_amount * end.day, 2)
 
         return amount
 
