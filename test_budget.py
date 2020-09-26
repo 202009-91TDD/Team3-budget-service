@@ -4,7 +4,7 @@ from datetime import datetime
 
 from unittest.mock import patch
 
-from budgetservice import BudgetService
+from budgetservice import BudgetService, Period
 
 
 class Budget(object):
@@ -26,6 +26,8 @@ class Budget(object):
     def daily_amount(self):
         return self.amount / self.days()
 
+    def create_period(self):
+        return Period(self.first_day(), self.last_day())
 
 class BudgetServiceTests(unittest.TestCase):
 
