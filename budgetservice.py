@@ -1,5 +1,6 @@
 from datetime import datetime
 import calendar
+from time import strftime
 
 
 class BudgetService(object):
@@ -17,8 +18,8 @@ class BudgetService(object):
             budget_first_day = datetime.strptime(budget.yearMonth, "%Y%m")
             days_of_budget = calendar.monthrange(budget_first_day.year, budget_first_day.month)[1]
 
-            is_start_budget = budget_first_day.year == start.year and budget_first_day.month == start.month
-            is_end_budget = budget_first_day.year == end.year and budget_first_day.month == end.month
+            is_start_budget = budget.yearMonth == start.strftime("%Y%m")
+            is_end_budget = budget.yearMonth == end.strftime("%Y%m")
 
             if is_start_budget and is_end_budget:
                 amount += round(budget.amount * (end.day - start.day + 1) / days_of_budget, 2)
