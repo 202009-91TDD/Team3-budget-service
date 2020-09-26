@@ -20,6 +20,8 @@ class Budget(object):
     def days(self):
         return calendar.monthrange(self.first_day().year, self.first_day().month)[1]
 
+    def last_day(self):
+        return self.first_day().replace(day=(self.days()))
 
 class BudgetServiceTests(unittest.TestCase):
 
