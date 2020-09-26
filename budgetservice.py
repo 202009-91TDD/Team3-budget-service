@@ -14,14 +14,14 @@ class BudgetService(object):
             if end < budget.first_day() or start > budget.last_day():
                 break
 
-            overlapping_days = self.overlapping_days(budget, end, start)
+            period = Period(start, end)
+            overlapping_days = self.overlapping_days(budget, end, start, period)
             total_amount += round(budget.daily_amount() * overlapping_days, 2)
 
         return total_amount
 
     @staticmethod
-    def overlapping_days(budget, end, start):
-        period = Period(start, end)
+    def overlapping_days(budget, end, start, period):
         overlapping_end = end if end < budget.last_day() else budget.last_day()
         overlapping_start = start if start > budget.first_day() else budget.first_day()
         overlapping_days = ((overlapping_end - overlapping_start).days + 1)
