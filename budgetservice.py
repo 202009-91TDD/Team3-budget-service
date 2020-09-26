@@ -5,10 +5,9 @@ class BudgetService(object):
 
         total_amount = 0
         for budget in self.get_budgets():
-            days_of_budget = budget.days()
-            budget_last_day = budget.first_day().replace(day=days_of_budget)
+            budget_last_day = budget.first_day().replace(day=(budget.days()))
 
-            daily_amount = budget.amount / days_of_budget
+            daily_amount = budget.amount / budget.days()
 
             if end < budget.first_day() or start > budget_last_day:
                 break
