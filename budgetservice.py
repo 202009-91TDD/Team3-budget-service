@@ -19,10 +19,14 @@ class BudgetService(object):
         period = Period(start, end)
         total_amount = 0
         for budget in self.get_budgets():
-            another = Period(budget.first_day(), budget.last_day())
+            another = self.create_period(budget)
             total_amount += round(budget.daily_amount() * period.overlapping_days(another), 2)
 
         return total_amount
+
+    @staticmethod
+    def create_period(budget):
+        return Period(budget.first_day(), budget.last_day())
 
     def get_budgets(self):
         pass
