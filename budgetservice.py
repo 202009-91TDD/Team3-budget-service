@@ -24,25 +24,29 @@ class BudgetService(object):
 
             daily_amount = budget.amount / days_of_budget
 
-            if is_start_budget and is_end_budget:
-                overlapping_end = end if end < budget_last_day else budget_last_day
-                overlapping_start = start if start > budget_first_day else budget_first_day
-
-            elif is_start_budget:
-                overlapping_end = end if end < budget_last_day else budget_last_day
-                overlapping_start = start if start > budget_first_day else budget_first_day
-
-            elif begin_month < budget.yearMonth < end_month:
-                overlapping_end = end if end < budget_last_day else budget_last_day
-                overlapping_start = start if start > budget_first_day else budget_first_day
-
-            elif is_end_budget:
-                overlapping_end = end if end < budget_last_day else budget_last_day
-                overlapping_start = start if start > budget_first_day else budget_first_day
-
-            else:
+            if end < budget_first_day or start > budget_last_day:
                 break
 
+            overlapping_end = end if end < budget_last_day else budget_last_day
+            overlapping_start = start if start > budget_first_day else budget_first_day
+            # if is_start_budget and is_end_budget:
+            #     overlapping_end = end if end < budget_last_day else budget_last_day
+            #     overlapping_start = start if start > budget_first_day else budget_first_day
+            #
+            # elif is_start_budget:
+            #     overlapping_end = end if end < budget_last_day else budget_last_day
+            #     overlapping_start = start if start > budget_first_day else budget_first_day
+            #
+            # elif begin_month < budget.yearMonth < end_month:
+            #     overlapping_end = end if end < budget_last_day else budget_last_day
+            #     overlapping_start = start if start > budget_first_day else budget_first_day
+            #
+            # elif is_end_budget:
+            #     overlapping_end = end if end < budget_last_day else budget_last_day
+            #     overlapping_start = start if start > budget_first_day else budget_first_day
+            #
+            # else:
+            #     break
             overlapping_days = ((overlapping_end - overlapping_start).days + 1)
             total_amount += round(daily_amount * overlapping_days, 2)
 
