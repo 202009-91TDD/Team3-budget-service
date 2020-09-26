@@ -1,1 +1,1 @@
-# budget-service
+# self-service

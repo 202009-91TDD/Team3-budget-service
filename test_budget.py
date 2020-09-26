@@ -12,6 +12,10 @@ class Budget(object):
         self.yearMonth = yearMonth
         self.amount = amount
 
+    def first_day(self):
+        budget_first_day = datetime.strptime(self.yearMonth, "%Y%m")
+        return budget_first_day
+
 
 class BudgetServiceTests(unittest.TestCase):
 

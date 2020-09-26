@@ -15,7 +15,7 @@ class BudgetService(object):
 
         total_amount = 0
         for budget in budgetsList:
-            budget_first_day = self.first_day(budget)
+            budget_first_day = budget.first_day()
             days_of_budget = calendar.monthrange(budget_first_day.year, budget_first_day.month)[1]
             budget_last_day = budget_first_day.replace(day=days_of_budget)
 
@@ -30,11 +30,6 @@ class BudgetService(object):
             total_amount += round(daily_amount * overlapping_days, 2)
 
         return total_amount
-
-    @staticmethod
-    def first_day(budget):
-        budget_first_day = datetime.strptime(budget.yearMonth, "%Y%m")
-        return budget_first_day
 
     def get_budgets(self):
         pass
