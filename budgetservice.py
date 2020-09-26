@@ -5,7 +5,7 @@ class BudgetService(object):
 
         total_amount = 0
         for budget in self.get_budgets():
-            daily_amount = self.daily_amount(budget)
+            daily_amount = budget.daily_amount()
 
             if end < budget.first_day() or start > budget.last_day():
                 break
@@ -16,11 +16,6 @@ class BudgetService(object):
             total_amount += round(daily_amount * overlapping_days, 2)
 
         return total_amount
-
-    @staticmethod
-    def daily_amount(budget):
-        daily_amount = budget.amount / budget.days()
-        return daily_amount
 
     def get_budgets(self):
         pass

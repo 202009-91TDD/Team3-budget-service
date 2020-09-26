@@ -23,6 +23,10 @@ class Budget(object):
     def last_day(self):
         return self.first_day().replace(day=(self.days()))
 
+    def daily_amount(self):
+        return self.amount / self.days()
+
+
 class BudgetServiceTests(unittest.TestCase):
 
     def setUp(self):
