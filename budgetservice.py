@@ -22,8 +22,10 @@ class BudgetService(object):
 
     @staticmethod
     def overlapping_days(budget, end, start, period):
-        overlapping_end = end if end < budget.last_day() else budget.last_day()
-        overlapping_start = start if start > budget.first_day() else budget.first_day()
+        my_end = end
+        my_start = start
+        overlapping_end = my_end if my_end < budget.last_day() else budget.last_day()
+        overlapping_start = my_start if my_start > budget.first_day() else budget.first_day()
         overlapping_days = ((overlapping_end - overlapping_start).days + 1)
         return overlapping_days
 
