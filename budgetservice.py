@@ -23,34 +23,30 @@ class BudgetService(object):
             is_end_budget = budget.yearMonth == end.strftime("%Y%m")
 
             daily_amount = budget.amount / days_of_budget
-            overlapping_end = end
-            overlapping_start = start
-            amount = 0
 
             if is_start_budget and is_end_budget:
                 overlapping_end = end
                 overlapping_start = start
-                amount = round(daily_amount * (overlapping_end - overlapping_start).days + 1, 2)
-                # amount += round(daily_amount * (overlapping_end - overlapping_start).days + 1, 2)
 
             elif is_start_budget:
                 overlapping_end = budget_last_day
                 overlapping_start = start
-                amount = round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
-                # amount += round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
 
             elif begin_month < budget.yearMonth < end_month:
                 overlapping_end = budget_last_day
                 overlapping_start = budget_first_day
-                amount = round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
-                # amount += round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
 
             elif is_end_budget:
                 overlapping_end = end
                 overlapping_start = budget_first_day
-                amount = round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
-                # amount += round(daily_amount * ((overlapping_end - overlapping_start).days + 1), 2)
+
+            else:
+                break
+
+            overlapping_days = ((overlapping_end - overlapping_start).days + 1)
+            amount = round(daily_amount * overlapping_days, 2)
             total_amount += amount
+
         return total_amount
 
     def get_budgets(self):
