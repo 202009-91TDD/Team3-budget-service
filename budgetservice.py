@@ -8,13 +8,8 @@ class BudgetService(object):
         if start > end:
             return 0
 
-        begin_month = datetime.strftime(start, "%Y%m")
-        end_month = datetime.strftime(end, "%Y%m")
-
-        budgetsList = self.get_budgets()
-
         total_amount = 0
-        for budget in budgetsList:
+        for budget in self.get_budgets():
             budget_first_day = budget.first_day()
             days_of_budget = calendar.monthrange(budget_first_day.year, budget_first_day.month)[1]
             budget_last_day = budget_first_day.replace(day=days_of_budget)
