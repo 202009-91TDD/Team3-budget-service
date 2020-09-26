@@ -17,6 +17,7 @@ class BudgetService(object):
         for budget in budgetsList:
             budget_first_day = datetime.strptime(budget.yearMonth, "%Y%m")
             days_of_budget = calendar.monthrange(budget_first_day.year, budget_first_day.month)[1]
+            budget_last_day = budget_first_day.replace(day=days_of_budget)
 
             is_start_budget = budget.yearMonth == start.strftime("%Y%m")
             is_end_budget = budget.yearMonth == end.strftime("%Y%m")
@@ -28,7 +29,8 @@ class BudgetService(object):
                 amount += round(budget.amount / days_of_budget * (days_of_budget - start.day + 1), 2)
 
             if begin_month < budget.yearMonth < end_month:
-                amount += budget.amount
+                amount += round(budget.amount / days_of_budget * ((budget_last_day - budget_first_day).days + 1), 2)
+                # amount += budget.amount
 
             if is_end_budget:
                 amount += round(budget.amount / days_of_budget * end.day, 2)
