@@ -17,11 +17,7 @@ class Period(object):
 class BudgetService(object):
     def query(self, start, end):
         period = Period(start, end)
-        total_amount = 0
-        for budget in self.get_budgets():
-            total_amount += budget.overlapping_amount(period)
-
-        return total_amount
+        return sum(budget.overlapping_amount(period) for budget in self.get_budgets())
 
     def get_budgets(self):
         pass
