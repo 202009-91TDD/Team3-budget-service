@@ -14,21 +14,24 @@ class BudgetService(object):
 
         amount = 0
         for budget in budgetsList:
-            budget_datetime = datetime.strptime(budget.yearMonth, "%Y%m")
-            budget_day = calendar.monthrange(budget_datetime.year, budget_datetime.month)[1]
+            budget_first_day = datetime.strptime(budget.yearMonth, "%Y%m")
+            days_of_budget = calendar.monthrange(budget_first_day.year, budget_first_day.month)[1]
 
-            if budget_datetime.year == start.year and budget_datetime.month == start.month and start.year == end.year and start.month == end.month:
-                amount += round(budget.amount * (end.day - start.day + 1) / budget_day, 2)
+            is_start_budget = budget_first_day.year == start.year and budget_first_day.month == start.month
+            is_end_budget = budget_first_day.year == end.year and budget_first_day.month == end.month
+
+            if is_start_budget and is_end_budget:
+                amount += round(budget.amount * (end.day - start.day + 1) / days_of_budget, 2)
                 return amount
 
-            if budget_datetime.year == start.year and budget_datetime.month == start.month:
-                amount += round(budget.amount * (budget_day - start.day + 1) / budget_day, 2)
+            if is_start_budget:
+                amount += round(budget.amount * (days_of_budget - start.day + 1) / days_of_budget, 2)
 
             if budget.yearMonth > begin_month and budget.yearMonth < end_month:
                 amount += budget.amount
 
-            if budget_datetime.year == end.year and budget_datetime.month == end.month:
-                amount += round(budget.amount * end.day / budget_day, 2)
+            if is_end_budget:
+                amount += round(budget.amount * end.day / days_of_budget, 2)
 
         return amount
 
