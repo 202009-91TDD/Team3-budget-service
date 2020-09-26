@@ -29,6 +29,10 @@ class Budget(object):
     def create_period(self):
         return Period(self.first_day(), self.last_day())
 
+    def overlapping_amount(self, period):
+        return round(self.daily_amount() * period.overlapping_days(self.create_period()), 2)
+
+
 class BudgetServiceTests(unittest.TestCase):
 
     def setUp(self):
