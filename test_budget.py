@@ -1,3 +1,4 @@
+import calendar
 import unittest
 from datetime import datetime
 
@@ -15,6 +16,9 @@ class Budget(object):
     def first_day(self):
         budget_first_day = datetime.strptime(self.yearMonth, "%Y%m")
         return budget_first_day
+
+    def days(self):
+        return calendar.monthrange(self.first_day().year, self.first_day().month)[1]
 
 
 class BudgetServiceTests(unittest.TestCase):
