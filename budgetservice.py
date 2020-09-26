@@ -30,7 +30,7 @@ class BudgetService(object):
 
             elif is_start_budget:
                 overlapping_end = budget_last_day
-                overlapping_start = start
+                overlapping_start = start if start > budget_first_day else budget_first_day
 
             elif begin_month < budget.yearMonth < end_month:
                 overlapping_end = budget_last_day
@@ -44,8 +44,7 @@ class BudgetService(object):
                 break
 
             overlapping_days = ((overlapping_end - overlapping_start).days + 1)
-            amount = round(daily_amount * overlapping_days, 2)
-            total_amount += amount
+            total_amount += round(daily_amount * overlapping_days, 2)
 
         return total_amount
 
